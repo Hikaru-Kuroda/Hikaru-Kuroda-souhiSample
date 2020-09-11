@@ -35,6 +35,7 @@ class Tasi1: ViewController {
         setUpButton()
         setUpView()
     }
+    
     func setUpLabel() {
         label.text = "Label"
         label.textColor = .black
