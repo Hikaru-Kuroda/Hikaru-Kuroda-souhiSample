@@ -14,7 +14,6 @@ class Task3: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
     }
     //課題3
     //http://photoshopvip.net/95427

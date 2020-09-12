@@ -10,115 +10,65 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let screenHeight = UIScreen.main.bounds.height
+    private let screenHeight = UIScreen.main.bounds.height
     
-    let firstView = UIView()
-    let secondView = UIView()
-    let thirdView = UIView()
+    private let firstView = UIView()
+    private let secondView = UIView()
+    private let thirdView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
+        
+        setUpContents()
     }
-
-
-}
-
-extension ViewController {
-    func setupViews() {
+    
+    private func setUpContents() {
         self.view.backgroundColor = .systemGray6
+    
+        setUpLabel(uiView: firstView, title: "This is FirstView")
+        setUpButton(uiView: firstView, title: "Button")
+        setUpView(uiView: firstView, topAnchor: view.topAnchor, topConstrait: screenHeight * 0.15)
         
-        setupFirstView()
-        setupSecondView()
-        setupThirdView()
+        setUpLabel(uiView: secondView, title: "This is SecondView")
+        setUpButton(uiView: secondView, title: "Button")
+        setUpView(uiView: secondView, topAnchor: firstView.bottomAnchor, topConstrait: 20)
+        
+        setUpLabel(uiView: thirdView, title: "This is ThirdView")
+        setUpButton(uiView: thirdView, title: "Button")
+        setUpView(uiView: thirdView, topAnchor: secondView.bottomAnchor, topConstrait: 20)
     }
     
-    func setupFirstView() {
+    private func setUpView(uiView: UIView, topAnchor: NSLayoutAnchor<NSLayoutYAxisAnchor>,topConstrait: CGFloat) {
+        uiView.backgroundColor = .white
+        uiView.layer.cornerRadius = 20
+        uiView.layer.shadowColor = .init(srgbRed: 0, green: 0, blue: 0, alpha: 0.2)
+        self.view.addSubview(uiView)
+        uiView.translatesAutoresizingMaskIntoConstraints = false
+        uiView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8).isActive = true
+        uiView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2).isActive = true
+        uiView.topAnchor.constraint(equalTo: topAnchor, constant: topConstrait).isActive = true
+        uiView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
+    }
+
+    private func setUpLabel(uiView: UIView, title: String) {
         let label = UILabel()
-        label.text = "This is FirstView"
-        firstView.addSubview(label)
+        label.text = title
+        label.textColor = .black
+        uiView.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.bottomAnchor.constraint(equalTo: firstView.centerYAnchor, constant: -10).isActive = true
-        label.centerXAnchor.constraint(equalToSystemSpacingAfter: firstView.centerXAnchor, multiplier: 0).isActive = true
-        
-        let button = UIButton()
-        button.setTitle("Button", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        firstView.addSubview(button)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.topAnchor.constraint(equalTo: firstView.centerYAnchor, constant: 10).isActive = true
-        button.centerXAnchor.constraint(equalToSystemSpacingAfter: firstView.centerXAnchor, multiplier: 0).isActive = true
-        
-        firstView.backgroundColor = .white
-        firstView.layer.cornerRadius = 20
-        firstView.layer.shadowColor = UIColor.black.cgColor
-        firstView.layer.shadowOpacity = 0.2
-        firstView.layer.shadowOffset = CGSize(width: 4, height: 4)
-        self.view.addSubview(firstView)
-        firstView.translatesAutoresizingMaskIntoConstraints = false
-        firstView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8).isActive = true
-        firstView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2).isActive = true
-        firstView.topAnchor.constraint(equalTo: view.topAnchor, constant: screenHeight * 0.15).isActive = true
-        firstView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
+        label.bottomAnchor.constraint(equalTo: uiView.centerYAnchor, constant: -20).isActive = true
+        label.centerXAnchor.constraint(equalToSystemSpacingAfter: uiView.centerXAnchor, multiplier: 0).isActive = true
     }
     
-    func setupSecondView() {
-        let label = UILabel()
-        label.text = "This is SecondView"
-        secondView.addSubview(label)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.bottomAnchor.constraint(equalTo: secondView.centerYAnchor, constant: -10).isActive = true
-        label.centerXAnchor.constraint(equalToSystemSpacingAfter: secondView.centerXAnchor, multiplier: 0).isActive = true
-        
+    private func setUpButton(uiView: UIView, title: String) {
         let button = UIButton()
-        button.setTitle("Button", for: .normal)
+        button.setTitle(title, for: .normal)
         button.setTitleColor(.black, for: .normal)
-        secondView.addSubview(button)
+        uiView.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.topAnchor.constraint(equalTo: secondView.centerYAnchor, constant: 10).isActive = true
-        button.centerXAnchor.constraint(equalToSystemSpacingAfter: secondView.centerXAnchor, multiplier: 0).isActive = true
-        
-        secondView.backgroundColor = .white
-        secondView.layer.cornerRadius = 20
-        secondView.layer.shadowColor = UIColor.black.cgColor
-        secondView.layer.shadowOpacity = 0.2
-        secondView.layer.shadowOffset = CGSize(width: 4, height: 4)
-        self.view.addSubview(secondView)
-        secondView.translatesAutoresizingMaskIntoConstraints = false
-        secondView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8).isActive = true
-        secondView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2).isActive = true
-        secondView.topAnchor.constraint(equalTo: firstView.bottomAnchor, constant: 30).isActive = true
-        secondView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
+        button.topAnchor.constraint(equalTo: uiView.centerYAnchor, constant: 20).isActive = true
+        button.centerXAnchor.constraint(equalToSystemSpacingAfter: uiView.centerXAnchor, multiplier: 0).isActive = true
     }
-    
-    func setupThirdView() {
-        let label = UILabel()
-        label.text = "This is ThirdView"
-        thirdView.addSubview(label)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.bottomAnchor.constraint(equalTo: thirdView.centerYAnchor, constant: -10).isActive = true
-        label.centerXAnchor.constraint(equalToSystemSpacingAfter: thirdView.centerXAnchor, multiplier: 0).isActive = true
-        
-        let button = UIButton()
-        button.setTitle("Button", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        thirdView.addSubview(button)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.topAnchor.constraint(equalTo: thirdView.centerYAnchor, constant: 10).isActive = true
-        button.centerXAnchor.constraint(equalToSystemSpacingAfter: thirdView.centerXAnchor, multiplier: 0).isActive = true
-        
-        thirdView.backgroundColor = .white
-        thirdView.layer.cornerRadius = 20
-        thirdView.layer.shadowColor = UIColor.black.cgColor
-        thirdView.layer.shadowOpacity = 0.2
-        thirdView.layer.shadowOffset = CGSize(width: 4, height: 4)
-        self.view.addSubview(thirdView)
-        thirdView.translatesAutoresizingMaskIntoConstraints = false
-        thirdView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8).isActive = true
-        thirdView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2).isActive = true
-        thirdView.topAnchor.constraint(equalTo: secondView.bottomAnchor, constant: 30).isActive = true
-        thirdView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
-    }
-    
+
 }
 
