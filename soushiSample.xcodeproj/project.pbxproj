@@ -12,6 +12,7 @@
 		3D78CA7C250A4DDA00564D9E /* Tasi1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D78CA7B250A4DDA00564D9E /* Tasi1.swift */; };
 		3D78CA81250BA62900564D9E /* Task3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D78CA80250BA62900564D9E /* Task3.swift */; };
 		3D9E40F0250CE42B00DCD115 /* Task4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9E40EF250CE42B00DCD115 /* Task4.swift */; };
+		E92318E4251019AA00A44CF1 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92318E3251019AA00A44CF1 /* TopViewController.swift */; };
 		E93A333D250C9F4F008083A3 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93A333C250C9F4F008083A3 /* Colors.swift */; };
 		E93A3340250CA1C8008083A3 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93A333F250CA1C8008083A3 /* UIColorExtension.swift */; };
 		E94307CC2505E99200C50981 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94307CB2505E99200C50981 /* AppDelegate.swift */; };
@@ -28,6 +29,7 @@
 		3D78CA7B250A4DDA00564D9E /* Tasi1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tasi1.swift; sourceTree = "<group>"; };
 		3D78CA80250BA62900564D9E /* Task3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task3.swift; sourceTree = "<group>"; };
 		3D9E40EF250CE42B00DCD115 /* Task4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task4.swift; sourceTree = "<group>"; };
+		E92318E3251019AA00A44CF1 /* TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
 		E93A333C250C9F4F008083A3 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E93A333F250CA1C8008083A3 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		E94307C82505E99200C50981 /* soushiSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = soushiSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,11 +92,12 @@
 		E94307CA2505E99200C50981 /* soushiSample */ = {
 			isa = PBXGroup;
 			children = (
-				E93A333E250CA1B6008083A3 /* Extension */,
 				E94307CB2505E99200C50981 /* AppDelegate.swift */,
 				E94307CD2505E99200C50981 /* SceneDelegate.swift */,
+				E92318E3251019AA00A44CF1 /* TopViewController.swift */,
 				E94307CF2505E99200C50981 /* ViewController.swift */,
 				E93A333C250C9F4F008083A3 /* Colors.swift */,
+				E93A333E250CA1B6008083A3 /* Extension */,
 				3D78CA7A250A4DB400564D9E /* TaskFile */,
 				E94307D12505E99200C50981 /* Main.storyboard */,
 				E94307D42505E99300C50981 /* Assets.xcassets */,
@@ -177,6 +180,7 @@
 			files = (
 				3D9E40F0250CE42B00DCD115 /* Task4.swift in Sources */,
 				3D78CA81250BA62900564D9E /* Task3.swift in Sources */,
+				E92318E4251019AA00A44CF1 /* TopViewController.swift in Sources */,
 				3D60B181250B17D2009D4F58 /* Task2.swift in Sources */,
 				3D78CA7C250A4DDA00564D9E /* Tasi1.swift in Sources */,
 				E93A3340250CA1C8008083A3 /* UIColorExtension.swift in Sources */,
