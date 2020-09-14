@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D2EA7FD250F94E1002B2FC2 /* Task5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2EA7FC250F94E1002B2FC2 /* Task5.swift */; };
 		3D60B181250B17D2009D4F58 /* Task2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D60B180250B17D2009D4F58 /* Task2.swift */; };
 		3D78CA7C250A4DDA00564D9E /* Tasi1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D78CA7B250A4DDA00564D9E /* Tasi1.swift */; };
 		3D78CA81250BA62900564D9E /* Task3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D78CA80250BA62900564D9E /* Task3.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D2EA7FC250F94E1002B2FC2 /* Task5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task5.swift; sourceTree = "<group>"; };
 		3D60B180250B17D2009D4F58 /* Task2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task2.swift; sourceTree = "<group>"; };
 		3D78CA7B250A4DDA00564D9E /* Tasi1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tasi1.swift; sourceTree = "<group>"; };
 		3D78CA80250BA62900564D9E /* Task3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task3.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 				3D60B180250B17D2009D4F58 /* Task2.swift */,
 				3D78CA80250BA62900564D9E /* Task3.swift */,
 				3D9E40EF250CE42B00DCD115 /* Task4.swift */,
+				3D2EA7FC250F94E1002B2FC2 /* Task5.swift */,
 			);
 			path = TaskFile;
 			sourceTree = "<group>";
@@ -180,6 +183,7 @@
 				E93A333D250C9F4F008083A3 /* Colors.swift in Sources */,
 				E94307D02505E99200C50981 /* ViewController.swift in Sources */,
 				E94307CC2505E99200C50981 /* AppDelegate.swift in Sources */,
+				3D2EA7FD250F94E1002B2FC2 /* Task5.swift in Sources */,
 				E94307CE2505E99200C50981 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
