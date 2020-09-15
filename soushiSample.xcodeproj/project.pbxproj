@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1AA1AB76BC0A511916BCC2F6 /* Pods_soushiSample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E47D1CA6ED96CF7D7135006 /* Pods_soushiSample.framework */; };
 		3D2EA7FD250F94E1002B2FC2 /* Task5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2EA7FC250F94E1002B2FC2 /* Task5.swift */; };
 		3D2EA8012510F4D1002B2FC2 /* Fix6.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2EA8002510F4D1002B2FC2 /* Fix6.swift */; };
 		3D60B181250B17D2009D4F58 /* Task2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D60B180250B17D2009D4F58 /* Task2.swift */; };
@@ -25,12 +26,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E47D1CA6ED96CF7D7135006 /* Pods_soushiSample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_soushiSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CF5703EF24E2B5545A2C04E /* Pods-soushiSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-soushiSample.release.xcconfig"; path = "Target Support Files/Pods-soushiSample/Pods-soushiSample.release.xcconfig"; sourceTree = "<group>"; };
 		3D2EA7FC250F94E1002B2FC2 /* Task5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task5.swift; sourceTree = "<group>"; };
 		3D2EA8002510F4D1002B2FC2 /* Fix6.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fix6.swift; sourceTree = "<group>"; };
 		3D60B180250B17D2009D4F58 /* Task2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task2.swift; sourceTree = "<group>"; };
 		3D78CA7B250A4DDA00564D9E /* Tasi1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tasi1.swift; sourceTree = "<group>"; };
 		3D78CA80250BA62900564D9E /* Task3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task3.swift; sourceTree = "<group>"; };
 		3D9E40EF250CE42B00DCD115 /* Task4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task4.swift; sourceTree = "<group>"; };
+		C9894DDF7ACF70B56203FA61 /* Pods-soushiSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-soushiSample.debug.xcconfig"; path = "Target Support Files/Pods-soushiSample/Pods-soushiSample.debug.xcconfig"; sourceTree = "<group>"; };
 		E92318E3251019AA00A44CF1 /* TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
 		E93A333C250C9F4F008083A3 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E93A333F250CA1C8008083A3 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
@@ -49,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AA1AB76BC0A511916BCC2F6 /* Pods_soushiSample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +73,24 @@
 			path = TaskFile;
 			sourceTree = "<group>";
 		};
+		78FBE8497E8905877E3D5948 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C9894DDF7ACF70B56203FA61 /* Pods-soushiSample.debug.xcconfig */,
+				2CF5703EF24E2B5545A2C04E /* Pods-soushiSample.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		C798F64A56B2D0BD30C6AB24 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0E47D1CA6ED96CF7D7135006 /* Pods_soushiSample.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E93A333E250CA1B6008083A3 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +104,8 @@
 			children = (
 				E94307CA2505E99200C50981 /* soushiSample */,
 				E94307C92505E99200C50981 /* Products */,
+				78FBE8497E8905877E3D5948 /* Pods */,
+				C798F64A56B2D0BD30C6AB24 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -117,9 +142,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E94307DC2505E99300C50981 /* Build configuration list for PBXNativeTarget "soushiSample" */;
 			buildPhases = (
+				0478CDD0E8E5BC8C45D22335 /* [CP] Check Pods Manifest.lock */,
 				E94307C42505E99200C50981 /* Sources */,
 				E94307C52505E99200C50981 /* Frameworks */,
 				E94307C62505E99200C50981 /* Resources */,
+				98CF67035606376D9848F790 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -175,6 +202,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0478CDD0E8E5BC8C45D22335 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-soushiSample-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		98CF67035606376D9848F790 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-soushiSample/Pods-soushiSample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-soushiSample/Pods-soushiSample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-soushiSample/Pods-soushiSample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E94307C42505E99200C50981 /* Sources */ = {
@@ -334,6 +403,7 @@
 		};
 		E94307DD2505E99300C50981 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C9894DDF7ACF70B56203FA61 /* Pods-soushiSample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -352,6 +422,7 @@
 		};
 		E94307DE2505E99300C50981 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2CF5703EF24E2B5545A2C04E /* Pods-soushiSample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

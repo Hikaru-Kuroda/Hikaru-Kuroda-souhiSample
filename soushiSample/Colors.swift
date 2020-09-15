@@ -10,10 +10,17 @@ import Foundation
 import UIKit
 
 struct Colors {
-    let white: UIColor = .rgb(r: 238, g: 238, b: 238, alpha: 1)
-    let darkGray: UIColor = .rgb(r: 57, g: 62, b: 70, alpha: 1)
-    let cyan: UIColor = .rgb(r: 118, g: 234, b: 215, alpha: 1)
-    let lightGreen: UIColor = .rgb(r: 196, g: 251, b: 109, alpha: 1)
+    let white: UIColor = .rgba(r: 230, g: 229, b: 239, alpha: 1)
+    let darkGray: UIColor = .rgba(r: 57, g: 62, b: 70, alpha: 1)
+    let cyan: UIColor = .rgba(r: 118, g: 234, b: 215, alpha: 1)
+    let lightGreen: UIColor = .rgba(r: 196, g: 251, b: 109, alpha: 1)
+    
+    //https://colordrop.io/
+    //選んだ配色のURLが貼れなかったので、使ったサイトを置いておきます
+    let headerColor: UIColor = .rgba(r: 40, g: 54, b: 84, alpha: 1)
+    let bgColor: UIColor = .rgba(r: 77, g: 99, b: 140, alpha: 1)
+    let contentBgColor: UIColor = .rgba(r: 240, g: 240, b: 240, alpha: 1)
+    
 }
 //自分がコロナチェッカーで使った配色です。
 //http://photoshopvip.net/95427を参考に、

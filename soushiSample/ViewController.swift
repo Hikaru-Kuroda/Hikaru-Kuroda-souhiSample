@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     
     private let screenHeight = UIScreen.main.bounds.height
     private let screenWidth = UIScreen.main.bounds.width
+    private let colors = Colors()
     
     private let headerView = UIView()
     private let scrollView = UIScrollView()
@@ -38,7 +39,7 @@ class ViewController: UIViewController {
     }
 
     private func setUpHeader() {
-        headerView.backgroundColor = .systemGray5
+        headerView.backgroundColor = colors.headerColor
         self.view.addSubview(headerView)
         headerView.translatesAutoresizingMaskIntoConstraints = false
         headerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
@@ -52,7 +53,7 @@ class ViewController: UIViewController {
         
         let titleLabel = UILabel()
         titleLabel.text = "Title"
-        titleLabel.textColor = .black
+        titleLabel.textColor = colors.white
         titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
         headerView.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -61,7 +62,7 @@ class ViewController: UIViewController {
     }
     
     private func setUpFooter() {
-        footerView.backgroundColor = .systemGray5
+        footerView.backgroundColor = colors.headerColor
         self.view.addSubview(footerView)
         footerView.translatesAutoresizingMaskIntoConstraints = false
         footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
@@ -75,12 +76,12 @@ class ViewController: UIViewController {
     }
     
     private func setUpBackgroundScrollView() {
+        
         var headerHeight: CGFloat = 70
         if(screenHeight >= 812) {
             headerHeight = 88
         }
         scrollView.frame = CGRect(x: 0, y: headerHeight, width: screenWidth, height: screenHeight - headerView.frame.height - footerView.frame.height)
-        print(headerView.frame.height)
         //各viewの高さに余白の高さを足して6倍、最後のViewの下部に余白をつくる
         let contentHeihgt = (screenHeight * 0.2 + 60) * 6 + 200
         scrollView.contentSize = CGSize(width: screenWidth, height: contentHeihgt)
@@ -88,13 +89,8 @@ class ViewController: UIViewController {
     }
     
     private func setUpContents() {
-//        let gradientColors = [Colors().darkGray.cgColor, Colors().cyan.cgColor, Colors().lightGreen.cgColor]
-//        let gradientLayer = CAGradientLayer()
-//        gradientLayer.colors = gradientColors
-//        gradientLayer.frame = CGRect(x: 0, y: 0, width: scrollView.frame.width, height: scrollView.contentSize.height)
-//        self.view.layer.insertSublayer(gradientLayer, at: 0)
         
-        self.view.backgroundColor = .systemGray6
+        self.view.backgroundColor = colors.bgColor
         //上のviewから60の余白を作る
         setUpContent(uiView: firstView, labelTitle: "FirstView", buttonTitle: "Button", topAnchor: scrollView.topAnchor, topConstrait: 60)
         setUpContent(uiView: secondView, labelTitle: "SecondView", buttonTitle: "Button", topAnchor: firstView.bottomAnchor, topConstrait: 60)
@@ -104,15 +100,14 @@ class ViewController: UIViewController {
         setUpContent(uiView: sixthView, labelTitle: "SixthView", buttonTitle: "Button", topAnchor: fifthView.bottomAnchor, topConstrait: 60)
     }
     
-    private func setUpContent(uiView: UIView, labelTitle: String, buttonTitle: String,
-                              topAnchor: NSLayoutAnchor<NSLayoutYAxisAnchor>,topConstrait: CGFloat) {
-        setUpLabel(uiView: uiView, title: labelTitle)
-        setUpButton(uiView: uiView, title: buttonTitle)
-        setUpView(uiView: uiView, topAnchor: topAnchor, topConstrait: topConstrait)
+    private func setUpContent(uiView: UIView, labelTitle: String, buttonTitle: String, topAnchor: NSLayoutAnchor<NSLayoutYAxisAnchor>,topConstrait: CGFloat) {
+        setUpContentLabel(uiView: uiView, title: labelTitle)
+        setUpCOntentButton(uiView: uiView, title: buttonTitle)
+        setUpContentView(uiView: uiView, topAnchor: topAnchor, topConstrait: topConstrait)
     }
     
-    private func setUpView(uiView: UIView, topAnchor: NSLayoutAnchor<NSLayoutYAxisAnchor>,topConstrait: CGFloat) {
-        uiView.backgroundColor = Colors().white
+    private func setUpContentView(uiView: UIView, topAnchor: NSLayoutAnchor<NSLayoutYAxisAnchor>,topConstrait: CGFloat) {
+        uiView.backgroundColor = colors.contentBgColor
         uiView.layer.cornerRadius = 20
         uiView.layer.shadowColor = .init(srgbRed: 0, green: 0, blue: 0, alpha: 0.2)
         uiView.layer.shadowOffset = CGSize(width: 5, height: 5)
@@ -125,7 +120,7 @@ class ViewController: UIViewController {
         uiView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0).isActive = true
     }
 
-    private func setUpLabel(uiView: UIView, title: String) {
+    private func setUpContentLabel(uiView: UIView, title: String) {
         let label = UILabel()
         label.text = title
         label.textColor = .black
@@ -135,7 +130,7 @@ class ViewController: UIViewController {
         label.centerXAnchor.constraint(equalToSystemSpacingAfter: uiView.centerXAnchor, multiplier: 0).isActive = true
     }
     
-    private func setUpButton(uiView: UIView, title: String) {
+    private func setUpCOntentButton(uiView: UIView, title: String) {
         let button = UIButton()
         button.setTitle(title, for: .normal)
         button.setTitleColor(.black, for: .normal)

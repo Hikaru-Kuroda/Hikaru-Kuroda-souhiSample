@@ -11,6 +11,7 @@ import UIKit
 class TopViewController: UIViewController {
     
     private let transitionButton = UIButton()
+//    let colors = Colors()
     override func viewDidLoad() {
         super.viewDidLoad()
         

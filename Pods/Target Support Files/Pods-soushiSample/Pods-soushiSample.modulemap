@@ -1,0 +1,6 @@
+framework module Pods_soushiSample {
+  umbrella header "Pods-soushiSample-umbrella.h"
+
+  export *
+  module * { export * }
+}
