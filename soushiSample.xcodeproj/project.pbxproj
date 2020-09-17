@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,7 @@
 		3D78CA7C250A4DDA00564D9E /* Tasi1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D78CA7B250A4DDA00564D9E /* Tasi1.swift */; };
 		3D78CA81250BA62900564D9E /* Task3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D78CA80250BA62900564D9E /* Task3.swift */; };
 		3D9E40F0250CE42B00DCD115 /* Task4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9E40EF250CE42B00DCD115 /* Task4.swift */; };
+		3DDA0E702513986D00185EFC /* Task7.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDA0E6F2513986D00185EFC /* Task7.swift */; };
 		E92318E4251019AA00A44CF1 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92318E3251019AA00A44CF1 /* TopViewController.swift */; };
 		E93A333D250C9F4F008083A3 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93A333C250C9F4F008083A3 /* Colors.swift */; };
 		E93A3340250CA1C8008083A3 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93A333F250CA1C8008083A3 /* UIColorExtension.swift */; };
@@ -34,6 +35,7 @@
 		3D78CA7B250A4DDA00564D9E /* Tasi1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tasi1.swift; sourceTree = "<group>"; };
 		3D78CA80250BA62900564D9E /* Task3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task3.swift; sourceTree = "<group>"; };
 		3D9E40EF250CE42B00DCD115 /* Task4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task4.swift; sourceTree = "<group>"; };
+		3DDA0E6F2513986D00185EFC /* Task7.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task7.swift; sourceTree = "<group>"; };
 		C9894DDF7ACF70B56203FA61 /* Pods-soushiSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-soushiSample.debug.xcconfig"; path = "Target Support Files/Pods-soushiSample/Pods-soushiSample.debug.xcconfig"; sourceTree = "<group>"; };
 		E92318E3251019AA00A44CF1 /* TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
 		E93A333C250C9F4F008083A3 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				3D9E40EF250CE42B00DCD115 /* Task4.swift */,
 				3D2EA7FC250F94E1002B2FC2 /* Task5.swift */,
 				3D2EA8002510F4D1002B2FC2 /* Fix6.swift */,
+				3DDA0E6F2513986D00185EFC /* Task7.swift */,
 			);
 			path = TaskFile;
 			sourceTree = "<group>";
@@ -79,7 +82,6 @@
 				C9894DDF7ACF70B56203FA61 /* Pods-soushiSample.debug.xcconfig */,
 				2CF5703EF24E2B5545A2C04E /* Pods-soushiSample.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -257,6 +259,7 @@
 				3D78CA7C250A4DDA00564D9E /* Tasi1.swift in Sources */,
 				E93A3340250CA1C8008083A3 /* UIColorExtension.swift in Sources */,
 				E93A333D250C9F4F008083A3 /* Colors.swift in Sources */,
+				3DDA0E702513986D00185EFC /* Task7.swift in Sources */,
 				E94307D02505E99200C50981 /* ViewController.swift in Sources */,
 				E94307CC2505E99200C50981 /* AppDelegate.swift in Sources */,
 				3D2EA7FD250F94E1002B2FC2 /* Task5.swift in Sources */,
