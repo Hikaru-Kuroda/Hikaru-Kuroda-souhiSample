@@ -10,6 +10,7 @@
 		1AA1AB76BC0A511916BCC2F6 /* Pods_soushiSample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E47D1CA6ED96CF7D7135006 /* Pods_soushiSample.framework */; };
 		3D2EA7FD250F94E1002B2FC2 /* Task5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2EA7FC250F94E1002B2FC2 /* Task5.swift */; };
 		3D2EA8012510F4D1002B2FC2 /* Fix6.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2EA8002510F4D1002B2FC2 /* Fix6.swift */; };
+		3D4BBF0A25160E1100D1360E /* Task8.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4BBF0925160E1100D1360E /* Task8.swift */; };
 		3D60B181250B17D2009D4F58 /* Task2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D60B180250B17D2009D4F58 /* Task2.swift */; };
 		3D78CA7C250A4DDA00564D9E /* Tasi1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D78CA7B250A4DDA00564D9E /* Tasi1.swift */; };
 		3D78CA81250BA62900564D9E /* Task3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D78CA80250BA62900564D9E /* Task3.swift */; };
@@ -31,6 +32,7 @@
 		2CF5703EF24E2B5545A2C04E /* Pods-soushiSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-soushiSample.release.xcconfig"; path = "Target Support Files/Pods-soushiSample/Pods-soushiSample.release.xcconfig"; sourceTree = "<group>"; };
 		3D2EA7FC250F94E1002B2FC2 /* Task5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task5.swift; sourceTree = "<group>"; };
 		3D2EA8002510F4D1002B2FC2 /* Fix6.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fix6.swift; sourceTree = "<group>"; };
+		3D4BBF0925160E1100D1360E /* Task8.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task8.swift; sourceTree = "<group>"; };
 		3D60B180250B17D2009D4F58 /* Task2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task2.swift; sourceTree = "<group>"; };
 		3D78CA7B250A4DDA00564D9E /* Tasi1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tasi1.swift; sourceTree = "<group>"; };
 		3D78CA80250BA62900564D9E /* Task3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task3.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 				3D2EA7FC250F94E1002B2FC2 /* Task5.swift */,
 				3D2EA8002510F4D1002B2FC2 /* Fix6.swift */,
 				3DDA0E6F2513986D00185EFC /* Task7.swift */,
+				3D4BBF0925160E1100D1360E /* Task8.swift */,
 			);
 			path = TaskFile;
 			sourceTree = "<group>";
@@ -255,6 +258,7 @@
 				3D9E40F0250CE42B00DCD115 /* Task4.swift in Sources */,
 				3D78CA81250BA62900564D9E /* Task3.swift in Sources */,
 				E92318E4251019AA00A44CF1 /* TopViewController.swift in Sources */,
+				3D4BBF0A25160E1100D1360E /* Task8.swift in Sources */,
 				3D60B181250B17D2009D4F58 /* Task2.swift in Sources */,
 				3D78CA7C250A4DDA00564D9E /* Tasi1.swift in Sources */,
 				E93A3340250CA1C8008083A3 /* UIColorExtension.swift in Sources */,
