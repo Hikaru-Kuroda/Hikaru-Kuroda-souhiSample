@@ -67,14 +67,3 @@ class Task8: NSObject {
 
 }
 
-struct prefecture {
-    let name_ja: String
-    let hospitalize: Int
-    let deaths: Int
-}
-
-struct total: Codable {
-    let hospitalize: Int
-    let death: Int
-}
-
