@@ -143,7 +143,7 @@ class ViewController: UIViewController {
 
 /*
  https://covid19-japan-web-api.now.sh/api//v1/prefectures
- {
+ [{
      id: 1,
      name_ja: "北海道",
      name_en: "Hokkaido",
@@ -166,7 +166,7 @@ class ViewController: UIViewController {
      severe: 2,
      discharge: 1724,
      symptom_confirming: 0
-},
+},]
  */
 
 /*
