@@ -8,7 +8,11 @@
 
 import Foundation
 
-//Codableが抜けてました😅
+struct total: Codable {
+    let hospitalize: Int
+    let death: Int
+}
+
 struct prefecture: Codable {
     let name_ja: String
     let hospitalize: Int

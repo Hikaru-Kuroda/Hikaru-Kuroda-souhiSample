@@ -27,6 +27,9 @@ class ViewController: UIViewController {
     private let sixthView = UIView()
     private let footerView = UIView()
     
+    private var totalResult: total?
+    private var prefectureResult: [prefecture]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("height: ", screenHeight)
@@ -36,6 +39,45 @@ class ViewController: UIViewController {
         setUpBackgroundScrollView()
         setUpContents()
         setUpFooter()
+        
+        getTotal()
+        getPrefecture()
+    }
+    
+    private  func getTotal() {
+        guard let url = URL(string: "https://covid19-japan-web-api.now.sh/api//v1/total") else { return }
+        let request = URLRequest(url: url)
+        let decoder = JSONDecoder()
+        let task = URLSession.shared.dataTask(with: request) { (data, res, error) in
+            do {
+                let json = try decoder.decode(total.self, from: data!)
+                self.totalResult = json
+                if let totalResult = self.totalResult {
+                   print(totalResult)
+                }
+            } catch {
+                print(error)
+            }
+        }
+        task.resume()
+    }
+    
+    private func getPrefecture() {
+        guard let url = URL(string: "https://covid19-japan-web-api.now.sh/api/v1/prefectures") else { return }
+        let request = URLRequest(url: url)
+        let decoder = JSONDecoder()
+        let task = URLSession.shared.dataTask(with: request) { (data, res, error) in
+            do {
+                let json = try decoder.decode([prefecture].self, from: data!)
+                self.prefectureResult = json
+                if let prefectureResult = self.prefectureResult {
+                    print(prefectureResult)
+                }
+            } catch {
+                print(error)
+            }
+        }
+        task.resume()
     }
 
     private func setUpHeader() {
