@@ -15,6 +15,7 @@
 		3D60B181250B17D2009D4F58 /* Task2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D60B180250B17D2009D4F58 /* Task2.swift */; };
 		3D78CA7C250A4DDA00564D9E /* Tasi1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D78CA7B250A4DDA00564D9E /* Tasi1.swift */; };
 		3D78CA81250BA62900564D9E /* Task3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D78CA80250BA62900564D9E /* Task3.swift */; };
+		3D7DDD1B251CF567004CD81F /* Fix10.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7DDD1A251CF567004CD81F /* Fix10.swift */; };
 		3D9E40F0250CE42B00DCD115 /* Task4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9E40EF250CE42B00DCD115 /* Task4.swift */; };
 		3DDA0E702513986D00185EFC /* Task7.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDA0E6F2513986D00185EFC /* Task7.swift */; };
 		E92318E4251019AA00A44CF1 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92318E3251019AA00A44CF1 /* TopViewController.swift */; };
@@ -39,6 +40,7 @@
 		3D60B180250B17D2009D4F58 /* Task2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task2.swift; sourceTree = "<group>"; };
 		3D78CA7B250A4DDA00564D9E /* Tasi1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tasi1.swift; sourceTree = "<group>"; };
 		3D78CA80250BA62900564D9E /* Task3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task3.swift; sourceTree = "<group>"; };
+		3D7DDD1A251CF567004CD81F /* Fix10.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fix10.swift; sourceTree = "<group>"; };
 		3D9E40EF250CE42B00DCD115 /* Task4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task4.swift; sourceTree = "<group>"; };
 		3DDA0E6F2513986D00185EFC /* Task7.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task7.swift; sourceTree = "<group>"; };
 		C9894DDF7ACF70B56203FA61 /* Pods-soushiSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-soushiSample.debug.xcconfig"; path = "Target Support Files/Pods-soushiSample/Pods-soushiSample.debug.xcconfig"; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 				3DDA0E6F2513986D00185EFC /* Task7.swift */,
 				3D4BBF0925160E1100D1360E /* Task8.swift */,
 				3D2E2D762518DB7200D2B8FA /* Task9.swift */,
+				3D7DDD1A251CF567004CD81F /* Fix10.swift */,
 			);
 			path = TaskFile;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E92C4639251852A000186903 /* Entity.swift in Sources */,
+				3D7DDD1B251CF567004CD81F /* Fix10.swift in Sources */,
 				3D9E40F0250CE42B00DCD115 /* Task4.swift in Sources */,
 				3D78CA81250BA62900564D9E /* Task3.swift in Sources */,
 				E92318E4251019AA00A44CF1 /* TopViewController.swift in Sources */,
