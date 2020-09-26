@@ -27,8 +27,8 @@ class ViewController: UIViewController {
     private let sixthView = UIView()
     private let footerView = UIView()
     
-    private var totalResult: total?
-    private var prefectureResult: [prefecture]?
+    private var totalResult: Total?
+    private var prefectureResult: [Prefecture]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,21 +40,77 @@ class ViewController: UIViewController {
         setUpContents()
         setUpFooter()
         
-        getTotal()
-        getPrefecture()
+        getCovidData { [self] (total, prefecture) in
+            self.totalResult = total
+            self.prefectureResult = prefecture
+            //not nil
+            print(totalResult)
+        }
+        
+        //nil
+        print(totalResult)
     }
     
-    private  func getTotal() {
+    private func getCovidData(completion: @escaping (Total, [Prefecture]) -> Void) {
+        let dispatchGroup = DispatchGroup()
+        let dispatchQueue = DispatchQueue(label: "queue", attributes: .concurrent)
+        
+        //Total
+        guard let totalUrl = URL(string: "https://covid19-japan-web-api.now.sh/api//v1/total") else { return }
+        let totalRequest = URLRequest(url: totalUrl)
+        let totalDecoder = JSONDecoder()
+        var totalJson: Total?
+        
+        dispatchGroup.enter()
+        dispatchQueue.async {
+            let totalTask = URLSession.shared.dataTask(with: totalRequest) { (data, res, error) in
+                do {
+                    totalJson = try totalDecoder.decode(Total.self, from: data!)
+                    dispatchGroup.leave()
+                } catch {
+                    print(error)
+                }
+            }
+            totalTask.resume()
+        }
+        
+        //Prefecture
+        guard let prefectureUrl = URL(string: "https://covid19-japan-web-api.now.sh/api/v1/prefectures") else { return }
+        let prefectureRequest = URLRequest(url: prefectureUrl)
+        let prefectureDecoder = JSONDecoder()
+        var prefectureJson: [Prefecture]?
+        
+        dispatchGroup.enter()
+        dispatchQueue.async {
+            let prefectureTask = URLSession.shared.dataTask(with: prefectureRequest) { (data, res, error) in
+                do {
+                    prefectureJson = try prefectureDecoder.decode([Prefecture].self, from: data!)
+                    dispatchGroup.leave()
+                } catch {
+                    print(error)
+                }
+            }
+            prefectureTask.resume()
+        }
+        
+        //取得後
+        dispatchGroup.notify(queue: .main) {
+            print("取得終了")
+            if let total = totalJson, let prefecture = prefectureJson {
+                completion(total, prefecture)
+            }
+        }
+        
+    }
+    
+    private  func getTotal(completion: @escaping (Total) -> Void) {
         guard let url = URL(string: "https://covid19-japan-web-api.now.sh/api//v1/total") else { return }
         let request = URLRequest(url: url)
         let decoder = JSONDecoder()
         let task = URLSession.shared.dataTask(with: request) { (data, res, error) in
             do {
-                let json = try decoder.decode(total.self, from: data!)
-                self.totalResult = json
-                if let totalResult = self.totalResult {
-                   print(totalResult)
-                }
+                let json = try decoder.decode(Total.self, from: data!)
+                completion(json)
             } catch {
                 print(error)
             }
@@ -62,24 +118,21 @@ class ViewController: UIViewController {
         task.resume()
     }
     
-    private func getPrefecture() {
+    private func getPrefecture(completion: @escaping ([Prefecture]) -> Void) {
         guard let url = URL(string: "https://covid19-japan-web-api.now.sh/api/v1/prefectures") else { return }
         let request = URLRequest(url: url)
         let decoder = JSONDecoder()
         let task = URLSession.shared.dataTask(with: request) { (data, res, error) in
             do {
-                let json = try decoder.decode([prefecture].self, from: data!)
-                self.prefectureResult = json
-                if let prefectureResult = self.prefectureResult {
-                    print(prefectureResult)
-                }
+                let json = try decoder.decode([Prefecture].self, from: data!)
+                completion(json)
             } catch {
                 print(error)
             }
         }
         task.resume()
     }
-
+    
     private func setUpHeader() {
         headerView.backgroundColor = colors.headerColor
         self.view.addSubview(headerView)
@@ -161,7 +214,7 @@ class ViewController: UIViewController {
         uiView.topAnchor.constraint(equalTo: topAnchor, constant: topConstrait).isActive = true
         uiView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0).isActive = true
     }
-
+    
     private func setUpContentLabel(uiView: UIView, title: String) {
         let label = UILabel()
         label.text = title
@@ -186,41 +239,41 @@ class ViewController: UIViewController {
 /*
  https://covid19-japan-web-api.now.sh/api//v1/prefectures
  [{
-     id: 1,
-     name_ja: "北海道",
-     name_en: "Hokkaido",
-     lat: 43.46722222,
-     lng: 142.8277778,
-     population: 5248552,
-     last_updated: {
-     cases_date: 20200917,
-     deaths_date: 20200917,
-     pcr_date: 20200917,
-     hospitalize_date: 20200917,
-     severe_date: 20200917,
-     discharge_date: 20200917,
-     symptom_confirming_date: 20200917
-     },
-     cases: 1892,
-     deaths: 106,
-     pcr: 50527,
-     hospitalize: 62,
-     severe: 2,
-     discharge: 1724,
-     symptom_confirming: 0
-},]
+ id: 1,
+ name_ja: "北海道",
+ name_en: "Hokkaido",
+ lat: 43.46722222,
+ lng: 142.8277778,
+ population: 5248552,
+ last_updated: {
+ cases_date: 20200917,
+ deaths_date: 20200917,
+ pcr_date: 20200917,
+ hospitalize_date: 20200917,
+ severe_date: 20200917,
+ discharge_date: 20200917,
+ symptom_confirming_date: 20200917
+ },
+ cases: 1892,
+ deaths: 106,
+ pcr: 50527,
+ hospitalize: 62,
+ severe: 2,
+ discharge: 1724,
+ symptom_confirming: 0
+ },]
  */
 
 /*
  https://covid19-japan-web-api.now.sh/api//v1/total
  {
-     date: 20200917,
-     pcr: 1789960,
-     hospitalize: 6267,
-     positive: 77721,
-     severe: 167,
-     discharge: 69882,
-     death: 1486,
-     symptom_confirming: 50
+ date: 20200917,
+ pcr: 1789960,
+ hospitalize: 6267,
+ positive: 77721,
+ severe: 167,
+ discharge: 69882,
+ death: 1486,
+ symptom_confirming: 50
  }
  */

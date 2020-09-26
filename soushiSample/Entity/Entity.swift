@@ -8,12 +8,12 @@
 
 import Foundation
 
-struct total: Codable {
+struct Total: Codable {
     let hospitalize: Int
     let death: Int
 }
 
-struct prefecture: Codable {
+struct Prefecture: Codable {
     let name_ja: String
     let hospitalize: Int
     let deaths: Int
