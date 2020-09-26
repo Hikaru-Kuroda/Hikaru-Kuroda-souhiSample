@@ -9,5 +9,5 @@
  
  getTotal()
  getPrefecture()
- の下の行でtotalResult、totalPrefectureにアクセスできるよう、修正してみてください！
+ の下の行でtotalResult、totalPrefectureにアクセスできるよう、修正AZ
  **/

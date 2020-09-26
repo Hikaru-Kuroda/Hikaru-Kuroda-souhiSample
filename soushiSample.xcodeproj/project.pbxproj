@@ -12,6 +12,7 @@
 		3D2EA7FD250F94E1002B2FC2 /* Task5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2EA7FC250F94E1002B2FC2 /* Task5.swift */; };
 		3D2EA8012510F4D1002B2FC2 /* Fix6.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2EA8002510F4D1002B2FC2 /* Fix6.swift */; };
 		3D4BBF0A25160E1100D1360E /* Task8.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4BBF0925160E1100D1360E /* Task8.swift */; };
+		3D5848DB251F687F00D6DC5B /* Task11.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5848DA251F687F00D6DC5B /* Task11.swift */; };
 		3D60B181250B17D2009D4F58 /* Task2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D60B180250B17D2009D4F58 /* Task2.swift */; };
 		3D78CA7C250A4DDA00564D9E /* Tasi1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D78CA7B250A4DDA00564D9E /* Tasi1.swift */; };
 		3D78CA81250BA62900564D9E /* Task3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D78CA80250BA62900564D9E /* Task3.swift */; };
@@ -37,6 +38,7 @@
 		3D2EA7FC250F94E1002B2FC2 /* Task5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task5.swift; sourceTree = "<group>"; };
 		3D2EA8002510F4D1002B2FC2 /* Fix6.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fix6.swift; sourceTree = "<group>"; };
 		3D4BBF0925160E1100D1360E /* Task8.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task8.swift; sourceTree = "<group>"; };
+		3D5848DA251F687F00D6DC5B /* Task11.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task11.swift; sourceTree = "<group>"; };
 		3D60B180250B17D2009D4F58 /* Task2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task2.swift; sourceTree = "<group>"; };
 		3D78CA7B250A4DDA00564D9E /* Tasi1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tasi1.swift; sourceTree = "<group>"; };
 		3D78CA80250BA62900564D9E /* Task3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task3.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 				3D4BBF0925160E1100D1360E /* Task8.swift */,
 				3D2E2D762518DB7200D2B8FA /* Task9.swift */,
 				3D7DDD1A251CF567004CD81F /* Fix10.swift */,
+				3D5848DA251F687F00D6DC5B /* Task11.swift */,
 			);
 			path = TaskFile;
 			sourceTree = "<group>";
@@ -290,6 +293,7 @@
 				3D78CA7C250A4DDA00564D9E /* Tasi1.swift in Sources */,
 				E93A3340250CA1C8008083A3 /* UIColorExtension.swift in Sources */,
 				E93A333D250C9F4F008083A3 /* Colors.swift in Sources */,
+				3D5848DB251F687F00D6DC5B /* Task11.swift in Sources */,
 				3DDA0E702513986D00185EFC /* Task7.swift in Sources */,
 				E94307D02505E99200C50981 /* ViewController.swift in Sources */,
 				3D2E2D772518DB7200D2B8FA /* Task9.swift in Sources */,
