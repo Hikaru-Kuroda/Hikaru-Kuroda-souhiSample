@@ -19,8 +19,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
-        window?.rootViewController = TopViewController()
+        window?.rootViewController = ViewController()
         window?.makeKeyAndVisible()
+        
+        let height = window!.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        LayoutGuide.statusBarHeight = height
+        LayoutGuide.screenWidth = UIScreen.main.bounds.width
+        LayoutGuide.screenHeight = UIScreen.main.bounds.height
+        
+        print("schene", height)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

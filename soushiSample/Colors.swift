@@ -17,8 +17,8 @@ struct Colors {
     
     //https://colordrop.io/
     //選んだ配色のURLが貼れなかったので、使ったサイトを置いておきます
-    let headerColor: UIColor = .rgba(r: 40, g: 54, b: 84, alpha: 1)
-    let bgColor: UIColor = .rgba(r: 77, g: 99, b: 140, alpha: 1)
+    let darkBlue: UIColor = .rgba(r: 40, g: 54, b: 84, alpha: 1)
+    let lightBlue: UIColor = .rgba(r: 77, g: 99, b: 140, alpha: 1)
     let contentBgColor: UIColor = .rgba(r: 240, g: 240, b: 240, alpha: 1)
     
 }

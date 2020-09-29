@@ -11,96 +11,86 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CAAnimationDelegate {
+    
     
     private let screenHeight = UIScreen.main.bounds.height
     private let screenWidth = UIScreen.main.bounds.width
+    private var statusBarHeight: CGFloat = 0
     private let colors = Colors()
     
     private let headerView = UIView()
-    private let scrollView = UIScrollView()
-    private let firstView = UIView()
-    private let secondView = UIView()
-    private let thirdView = UIView()
-    private let fourthView = UIView()
-    private let fifthView = UIView()
-    private let sixthView = UIView()
-    private let footerView = UIView()
+    private let reloadButton = UIButton()
+    private let chatButton = UIButton()
+    private let contentTitleView = UIView()
+    private let covidImageView = UIImageView()
+    
+    private let contentView = UIView()
+    private var contentCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
+    
+    private let healthButton = UIButton()
+    private let prefectureButton = UIButton()
     
     private var totalResult: Total?
     private var prefectureResult: [Prefecture]?
+    
+    let contentTitles = ["PCR数", "感染者数", "入院者数", "重傷者数", "死者数", "退院者数"]
+    var contentNumberTitles = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print("height: ", screenHeight)
         print("width: ", screenWidth)
         
-        setUpHeader()
-        setUpBackgroundScrollView()
-        setUpContents()
-        setUpFooter()
+        initCollectionView()
         
-        getCovidData { [self] (total, prefecture) in
+        getTotal { (total) in
             self.totalResult = total
-            self.prefectureResult = prefecture
-            //not nil
-            print(totalResult)
+            self.contentNumberTitles = self.createNumberLabels(total: total)
+            DispatchQueue.main.async {
+                self.contentCollectionView.reloadData()
+            }
         }
         
-        //nil
-        print(totalResult)
+        getPrefecture { (prefectures) in
+            self.prefectureResult = prefectures
+        }
+        
     }
     
-    private func getCovidData(completion: @escaping (Total, [Prefecture]) -> Void) {
-        let dispatchGroup = DispatchGroup()
-        let dispatchQueue = DispatchQueue(label: "queue", attributes: .concurrent)
+    override func viewDidLayoutSubviews() {
+        statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
         
-        //Total
-        guard let totalUrl = URL(string: "https://covid19-japan-web-api.now.sh/api//v1/total") else { return }
-        let totalRequest = URLRequest(url: totalUrl)
-        let totalDecoder = JSONDecoder()
-        var totalJson: Total?
+        self.view.backgroundColor = .systemGray6
+        contentCollectionView.reloadData()
+        setupHeaderView()
+        setupHeaderButton(button: reloadButton, image: UIImage(named: "reload")!, position: .left)
+        setupHeaderButton(button: chatButton, image: UIImage(named: "chat")!, position: .right)
+
+        setupContentView()
+        setupContentTitleView()
+        contentCollectionView.backgroundColor = .clear
+        setupBottomButtons(button: healthButton, title: "健康管理", topAnchor: contentView.bottomAnchor, constraint: screenHeight * 0.05)
+        setupBottomButtons(button: prefectureButton, title: "県別状況", topAnchor: healthButton.bottomAnchor, constraint: screenHeight * 0.03)
         
-        dispatchGroup.enter()
-        dispatchQueue.async {
-            let totalTask = URLSession.shared.dataTask(with: totalRequest) { (data, res, error) in
-                do {
-                    totalJson = try totalDecoder.decode(Total.self, from: data!)
-                    dispatchGroup.leave()
-                } catch {
-                    print(error)
-                }
-            }
-            totalTask.resume()
-        }
+        reloadButton.addTarget(self, action: #selector(tappedReloadButton(_:)), for: .touchUpInside)
+        chatButton.addTarget(self, action: #selector(tappedChatButton(_:)), for: .touchUpInside)
+        healthButton.addTarget(self, action: #selector(tappedHealthButton(_:)), for: .touchUpInside)
+        prefectureButton.addTarget(self, action: #selector(tappedPrefectureButton(_:)), for: .touchUpInside)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        let rorate = CABasicAnimation(keyPath: "transform.rotation")
+        rorate.duration = 0.6
+        rorate.fromValue = CGFloat(Double.pi / 180) * -45
+        rorate.repeatCount = 1
         
-        //Prefecture
-        guard let prefectureUrl = URL(string: "https://covid19-japan-web-api.now.sh/api/v1/prefectures") else { return }
-        let prefectureRequest = URLRequest(url: prefectureUrl)
-        let prefectureDecoder = JSONDecoder()
-        var prefectureJson: [Prefecture]?
+        let move = CABasicAnimation(keyPath: "position")
+        move.duration = 0.6
+        move.fromValue = [screenWidth, contentTitleView.frame.height / 2]
         
-        dispatchGroup.enter()
-        dispatchQueue.async {
-            let prefectureTask = URLSession.shared.dataTask(with: prefectureRequest) { (data, res, error) in
-                do {
-                    prefectureJson = try prefectureDecoder.decode([Prefecture].self, from: data!)
-                    dispatchGroup.leave()
-                } catch {
-                    print(error)
-                }
-            }
-            prefectureTask.resume()
-        }
-        
-        //取得後
-        dispatchGroup.notify(queue: .main) {
-            print("取得終了")
-            if let total = totalJson, let prefecture = prefectureJson {
-                completion(total, prefecture)
-            }
-        }
-        
+        covidImageView.layer.add(rorate, forKey: "rorate")
+        covidImageView.layer.add(move, forKey: "move")
     }
     
     private  func getTotal(completion: @escaping (Total) -> Void) {
@@ -133,107 +123,162 @@ class ViewController: UIViewController {
         task.resume()
     }
     
-    private func setUpHeader() {
-        headerView.backgroundColor = colors.headerColor
+    private func createNumberLabels(total: Total?) -> [String]{
+        var titles = [String]()
+        if let total = total {
+            titles.append(String(total.pcr))
+            titles.append(String(total.positive))
+            titles.append(String(total.hospitalize))
+            titles.append(String(total.severe))
+            titles.append(String(total.death))
+            titles.append(String(total.discharge))
+        }
+        return titles
+    }
+    //MARK: Button tapped
+    @objc func tappedReloadButton(_ sender: UIButton) {
+        self.viewDidLoad()
+    }
+    
+    @objc func tappedChatButton(_ sender: UIButton) {
+        
+    }
+    
+    @objc func tappedHealthButton(_ sender: UIButton) {
+        
+    }
+    
+    @objc func tappedPrefectureButton(_ sender: UIButton) {
+        
+    }
+    
+    //MARK: UI
+    private func setupHeaderView() {
+        
+        headerView.backgroundColor = .clear
         self.view.addSubview(headerView)
         headerView.translatesAutoresizingMaskIntoConstraints = false
         headerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         headerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         headerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        var headerHeight: CGFloat = 70
-        if(screenHeight >= 812) {
-            headerHeight = 88
+        headerView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5).isActive = true
+        
+        let gradietLayer = CAGradientLayer()
+        gradietLayer.colors = [colors.darkBlue.cgColor, colors.lightBlue.cgColor]
+        gradietLayer.frame = headerView.bounds
+        headerView.layer.addSublayer(gradietLayer)
+    }
+    
+    private func setupHeaderButton(button: UIButton, image: UIImage, position: Position) {
+        button.imageView?.contentMode = .scaleAspectFill
+        button.setImage(image, for: .normal)
+        self.headerView.addSubview(button)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.topAnchor.constraint(equalTo: headerView.topAnchor, constant: statusBarHeight+5).isActive = true
+        button.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        if(position == .left){
+            button.leftAnchor.constraint(equalTo: headerView.leftAnchor, constant: 20).isActive = true
+        } else {
+            button.rightAnchor.constraint(equalTo: headerView.rightAnchor, constant: -20).isActive = true
         }
-        headerView.heightAnchor.constraint(equalToConstant: headerHeight).isActive = true
+    }
+    
+    private func setupContentTitleView() {
         
         let titleLabel = UILabel()
-        titleLabel.text = "Title"
-        titleLabel.textColor = colors.white
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
-        headerView.addSubview(titleLabel)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10).isActive = true
-        titleLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor).isActive = true
-    }
-    
-    private func setUpFooter() {
-        footerView.backgroundColor = colors.headerColor
-        self.view.addSubview(footerView)
-        footerView.translatesAutoresizingMaskIntoConstraints = false
-        footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        footerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        footerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        var footerViewHeight: CGFloat = 49
-        if(screenHeight >= 812) {
-            footerViewHeight = 83
-        }
-        footerView.heightAnchor.constraint(equalToConstant: footerViewHeight).isActive = true
-    }
-    
-    private func setUpBackgroundScrollView() {
+        titleLabel.text = "Covid in Japan"
+        titleLabel.font = .systemFont(ofSize: CGFloat(screenWidth*0.08), weight: .heavy)
+        titleLabel.textColor = .white
+        titleLabel.sizeToFit()
+        contentTitleView.addSubview(titleLabel)
+        titleLabel.centerYAnchor.constraint(equalTo: contentTitleView.centerYAnchor).isActive = true
         
-        var headerHeight: CGFloat = 70
-        if(screenHeight >= 812) {
-            headerHeight = 88
-        }
-        scrollView.frame = CGRect(x: 0, y: headerHeight, width: screenWidth, height: screenHeight - headerView.frame.height - footerView.frame.height)
-        //各viewの高さに余白の高さを足して6倍、最後のViewの下部に余白をつくる
-        let contentHeihgt = (screenHeight * 0.2 + 60) * 6 + 200
-        scrollView.contentSize = CGSize(width: screenWidth, height: contentHeihgt)
-        self.view.addSubview(scrollView)
-    }
-    
-    private func setUpContents() {
+        covidImageView.image = UIImage(named: "covid")
+        covidImageView.contentMode = .scaleAspectFill
+        contentTitleView.addSubview(covidImageView)
+        covidImageView.translatesAutoresizingMaskIntoConstraints = false
+        covidImageView.heightAnchor.constraint(equalToConstant: screenWidth*0.13).isActive = true
+        covidImageView.widthAnchor.constraint(equalToConstant: screenWidth*0.13).isActive = true
+        covidImageView.centerYAnchor.constraint(equalTo: contentTitleView.centerYAnchor).isActive = true
+        covidImageView.rightAnchor.constraint(equalTo: contentTitleView.rightAnchor).isActive = true
         
-        self.view.backgroundColor = colors.bgColor
-        //上のviewから60の余白を作る
-        setUpContent(uiView: firstView, labelTitle: "FirstView", buttonTitle: "Button", topAnchor: scrollView.topAnchor, topConstrait: 60)
-        setUpContent(uiView: secondView, labelTitle: "SecondView", buttonTitle: "Button", topAnchor: firstView.bottomAnchor, topConstrait: 60)
-        setUpContent(uiView: thirdView, labelTitle: "ThirdView", buttonTitle: "Button", topAnchor: secondView.bottomAnchor, topConstrait: 60)
-        setUpContent(uiView: fourthView, labelTitle: "FourthView", buttonTitle: "Button", topAnchor: thirdView.bottomAnchor, topConstrait: 60)
-        setUpContent(uiView: fifthView, labelTitle: "FifthView", buttonTitle: "Button", topAnchor: fourthView.bottomAnchor, topConstrait: 60)
-        setUpContent(uiView: sixthView, labelTitle: "SixthView", buttonTitle: "Button", topAnchor: fifthView.bottomAnchor, topConstrait: 60)
+        contentTitleView.center.x = screenWidth / 2
+        headerView.addSubview(contentTitleView)
+        contentTitleView.translatesAutoresizingMaskIntoConstraints = false
+        contentTitleView.bottomAnchor.constraint(equalTo: contentView.topAnchor, constant: -20).isActive = true
+        contentTitleView.widthAnchor.constraint(equalToConstant: screenWidth*0.72).isActive = true
+        contentTitleView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: (screenWidth*0.13)/4).isActive = true
+        
+//        contentTitleView.backgroundColor = .yellow
     }
     
-    private func setUpContent(uiView: UIView, labelTitle: String, buttonTitle: String, topAnchor: NSLayoutAnchor<NSLayoutYAxisAnchor>,topConstrait: CGFloat) {
-        setUpContentLabel(uiView: uiView, title: labelTitle)
-        setUpCOntentButton(uiView: uiView, title: buttonTitle)
-        setUpContentView(uiView: uiView, topAnchor: topAnchor, topConstrait: topConstrait)
+    private func setupContentView() {
+        
+        contentView.backgroundColor = colors.contentBgColor
+        contentView.layer.cornerRadius = 30
+        contentView.layer.shadowOpacity = 1
+        contentView.layer.shadowOffset = CGSize(width: 5, height: 5)
+        contentView.layer.shadowColor = .init(red: 0, green: 0, blue: 0, alpha: 0.3)
+        contentView.layer.shadowOpacity = 5
+        headerView.addSubview(contentView)
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        contentView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.45).isActive = true
+        contentView.centerYAnchor.constraint(equalTo: headerView.bottomAnchor).isActive = true
+        contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        self.contentView.addSubview(contentCollectionView)
+        contentCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        contentCollectionView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: (screenHeight*0.45)*0.12).isActive = true
+        contentCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -(screenHeight*0.45)*0.12).isActive = true
+        contentCollectionView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: (screenWidth*0.45)*0.2).isActive = true
+        contentCollectionView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -(screenWidth*0.45)*0.2).isActive = true
     }
     
-    private func setUpContentView(uiView: UIView, topAnchor: NSLayoutAnchor<NSLayoutYAxisAnchor>,topConstrait: CGFloat) {
-        uiView.backgroundColor = colors.contentBgColor
-        uiView.layer.cornerRadius = 20
-        uiView.layer.shadowColor = .init(srgbRed: 0, green: 0, blue: 0, alpha: 0.2)
-        uiView.layer.shadowOffset = CGSize(width: 5, height: 5)
-        uiView.layer.shadowOpacity = 1
-        self.scrollView.addSubview(uiView)
-        uiView.translatesAutoresizingMaskIntoConstraints = false
-        uiView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.8).isActive = true
-        uiView.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.2).isActive = true
-        uiView.topAnchor.constraint(equalTo: topAnchor, constant: topConstrait).isActive = true
-        uiView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0).isActive = true
+    private func initCollectionView() {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: self.view.frame.width * 0.34, height: 60)
+        //(contentCollectionViewの高さ - 要素の高さの和) / 余白の数
+        layout.minimumLineSpacing = (screenHeight * 0.45 * 0.76 - 180) / 2
+        contentCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        contentCollectionView.backgroundColor = .yellow
+        contentCollectionView.dataSource = self
+        contentCollectionView.register(ContentCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
     }
     
-    private func setUpContentLabel(uiView: UIView, title: String) {
-        let label = UILabel()
-        label.text = title
-        label.textColor = .black
-        uiView.addSubview(label)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.bottomAnchor.constraint(equalTo: uiView.centerYAnchor, constant: -10).isActive = true
-        label.centerXAnchor.constraint(equalToSystemSpacingAfter: uiView.centerXAnchor, multiplier: 0).isActive = true
-    }
-    
-    private func setUpCOntentButton(uiView: UIView, title: String) {
-        let button = UIButton()
+    private func setupBottomButtons(button: UIButton, title: String, topAnchor: NSLayoutAnchor<NSLayoutYAxisAnchor>, constraint: CGFloat) {
+        let KernAttr = [NSAttributedString.Key.kern: 5]
+        button.titleLabel!.attributedText = NSMutableAttributedString(string: title, attributes: KernAttr)
         button.setTitle(title, for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        uiView.addSubview(button)
+        button.titleLabel?.font = .systemFont(ofSize: 18, weight: .regular)
+        button.setTitleColor(colors.darkBlue, for: .normal)
+        button.titleLabel?.textAlignment = .center
+        self.view.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.topAnchor.constraint(equalTo: uiView.centerYAnchor, constant: 10).isActive = true
-        button.centerXAnchor.constraint(equalToSystemSpacingAfter: uiView.centerXAnchor, multiplier: 0).isActive = true
+        button.topAnchor.constraint(equalTo: topAnchor, constant: constraint).isActive = true
+        button.widthAnchor.constraint(equalTo: view.widthAnchor, constant: 0).isActive = true
+        button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
+
+}
+
+extension ViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return contentNumberTitles.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = contentCollectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ContentCollectionViewCell
+        cell.titleLabel.text = contentTitles[indexPath.row]
+        cell.numberLabel.text = contentNumberTitles[indexPath.row]
+        return cell
+    }
+}
+
+enum Position {
+    case left
+    case right
 }
 
 /*

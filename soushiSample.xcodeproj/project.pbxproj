@@ -19,6 +19,7 @@
 		3D7DDD1B251CF567004CD81F /* Fix10.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7DDD1A251CF567004CD81F /* Fix10.swift */; };
 		3D9E40F0250CE42B00DCD115 /* Task4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9E40EF250CE42B00DCD115 /* Task4.swift */; };
 		3DDA0E702513986D00185EFC /* Task7.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDA0E6F2513986D00185EFC /* Task7.swift */; };
+		E916B36A25229F4300432C47 /* ContentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E916B36925229F4300432C47 /* ContentCollectionViewCell.swift */; };
 		E92318E4251019AA00A44CF1 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92318E3251019AA00A44CF1 /* TopViewController.swift */; };
 		E92C4639251852A000186903 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92C4638251852A000186903 /* Entity.swift */; };
 		E93A333D250C9F4F008083A3 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93A333C250C9F4F008083A3 /* Colors.swift */; };
@@ -29,6 +30,7 @@
 		E94307D32505E99200C50981 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E94307D12505E99200C50981 /* Main.storyboard */; };
 		E94307D52505E99300C50981 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E94307D42505E99300C50981 /* Assets.xcassets */; };
 		E94307D82505E99300C50981 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E94307D62505E99300C50981 /* LaunchScreen.storyboard */; };
+		E94C0F782520533A00DEEB31 /* LayoutGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94C0F772520533A00DEEB31 /* LayoutGuide.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,7 @@
 		3D9E40EF250CE42B00DCD115 /* Task4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task4.swift; sourceTree = "<group>"; };
 		3DDA0E6F2513986D00185EFC /* Task7.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task7.swift; sourceTree = "<group>"; };
 		C9894DDF7ACF70B56203FA61 /* Pods-soushiSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-soushiSample.debug.xcconfig"; path = "Target Support Files/Pods-soushiSample/Pods-soushiSample.debug.xcconfig"; sourceTree = "<group>"; };
+		E916B36925229F4300432C47 /* ContentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCollectionViewCell.swift; sourceTree = "<group>"; };
 		E92318E3251019AA00A44CF1 /* TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
 		E92C4638251852A000186903 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 		E93A333C250C9F4F008083A3 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -58,6 +61,7 @@
 		E94307D42505E99300C50981 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E94307D72505E99300C50981 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E94307D92505E99300C50981 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E94C0F772520533A00DEEB31 /* LayoutGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutGuide.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +116,7 @@
 			children = (
 				E92318E3251019AA00A44CF1 /* TopViewController.swift */,
 				E94307CF2505E99200C50981 /* ViewController.swift */,
+				E916B36925229F4300432C47 /* ContentCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -164,6 +169,7 @@
 				E94307D42505E99300C50981 /* Assets.xcassets */,
 				E94307D62505E99300C50981 /* LaunchScreen.storyboard */,
 				E94307D92505E99300C50981 /* Info.plist */,
+				E94C0F772520533A00DEEB31 /* LayoutGuide.swift */,
 			);
 			path = soushiSample;
 			sourceTree = "<group>";
@@ -285,6 +291,8 @@
 			files = (
 				E92C4639251852A000186903 /* Entity.swift in Sources */,
 				3D7DDD1B251CF567004CD81F /* Fix10.swift in Sources */,
+				E916B36A25229F4300432C47 /* ContentCollectionViewCell.swift in Sources */,
+				E94C0F782520533A00DEEB31 /* LayoutGuide.swift in Sources */,
 				3D9E40F0250CE42B00DCD115 /* Task4.swift in Sources */,
 				3D78CA81250BA62900564D9E /* Task3.swift in Sources */,
 				E92318E4251019AA00A44CF1 /* TopViewController.swift in Sources */,

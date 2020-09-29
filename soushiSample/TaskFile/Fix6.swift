@@ -64,7 +64,7 @@ class ViewController6: UIViewController {
     }
 
     private func setUpHeader() {
-        headerView.backgroundColor = colors.headerColor
+//        headerView.backgroundColor = colors.headerColor
         self.view.addSubview(headerView)
         headerView.translatesAutoresizingMaskIntoConstraints = false
         headerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
@@ -87,7 +87,7 @@ class ViewController6: UIViewController {
     }
     
     private func setUpFooter() {
-        footerView.backgroundColor = colors.headerColor
+//        footerView.backgroundColor = colors.headerColor
         self.view.addSubview(footerView)
         footerView.translatesAutoresizingMaskIntoConstraints = false
         footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
@@ -115,7 +115,7 @@ class ViewController6: UIViewController {
     
     private func setUpContents() {
         
-        self.view.backgroundColor = colors.bgColor
+//        self.view.backgroundColor = colors.bgColor
         //上のviewから60の余白を作る
         setUpContent(uiView: firstView, labelTitle: "FirstView", buttonTitle: "Button", topAnchor: scrollView.topAnchor, topConstrait: 60)
         setUpContent(uiView: secondView, labelTitle: "SecondView", buttonTitle: "Button", topAnchor: firstView.bottomAnchor, topConstrait: 60)

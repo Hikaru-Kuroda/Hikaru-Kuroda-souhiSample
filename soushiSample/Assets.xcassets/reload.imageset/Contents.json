@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "リロードのフリーアイコン-3.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "リロードのフリーアイコン-4.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "リロードのフリーアイコン.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
