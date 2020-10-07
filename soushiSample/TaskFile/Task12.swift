@@ -1,0 +1,377 @@
+/*
+ 健康管理画面を作ってもらいたいです。
+ FSCalendarというライブラリでカレンダーを表示して
+ Realmを使って診断結果を保存する画面です。
+ 重度に合わせて診断内容のポイントが違っていて、
+ 合計点数で診断結果を返します。
+ 診断結果は低、中、高とあり、点数によって振り分けられます。
+ ロジックの詳細はレイアウト作成後に伝えられたらと思っていますが、
+ 独自実装で作ってもらっても大丈夫です。
+ ただ、面接に備えて即席でやったため診断結果はタスクキルとともに消えてしまうので
+ Coredataなどに保存した方が良いかもしれないです。
+ まずはレイアウトを真似てやっていただけたらと思います<(_ _)>
+ 
+ 
+ 
+ 以下はトップ画面のコードです。
+ かなり雑になっていて恥ずかしいのですが
+ 一応提供させていただきます<(_ _)>
+ **/
+
+
+//
+//  ViewController.swift
+//  db01
+//
+//  Created by Tanaka Soushi on 2020/05/22.
+//  Copyright © 2020 Tanaka Soushi. All rights reserved.
+//
+///Users/tanakasoushi/Desktop/SwiftiPhone/COVID/db01/Base.lproj/Main.storyboard: error: IB Designables: Failed to render and update auto layout status for UIViewController (g7j-Xd-C33): Failed to launch designables agent. Check the console for a more detailed description and please file a bug report at feedbackassistant.apple.com.
+
+import UIKit
+import RealmSwift
+import Alamofire
+import KRProgressHUD
+import FirebaseFirestore
+
+class ViewController: UIViewController{
+    
+    @IBOutlet var contentView: UIView!
+    @IBOutlet weak var containLabel: UIView!
+    
+    @IBOutlet weak var healthButton: UIButton!
+    @IBOutlet weak var infoButton: UIButton!
+    
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var pcr: UILabel!
+    @IBOutlet weak var positive: UILabel!
+    @IBOutlet weak var hospitalize: UILabel!
+    @IBOutlet weak var severe: UILabel!
+    @IBOutlet weak var death: UILabel!
+    @IBOutlet weak var discharge: UILabel!
+    
+    @IBOutlet weak var pcrNum: UILabel!
+    @IBOutlet weak var positiveNum: UILabel!
+    @IBOutlet weak var hospitalizeNum: UILabel!
+    @IBOutlet weak var severeNum: UILabel!
+    @IBOutlet weak var deathNum: UILabel!
+    @IBOutlet weak var dischargeNum: UILabel!
+    
+    private var result:[CovidInfo.Prefecture] = []
+    let colors = Colors.init()
+    var day = ""
+    
+    override func viewDidLayoutSubviews() {
+        let width:CGFloat = view.frame.size.width
+        let height:CGFloat = view.frame.size.height
+        var textHeight:CGFloat = 0
+        var buttonHeight:CGFloat = 0
+        var contentHeight:CGFloat = 0
+        if height == 667 {
+            textHeight = 30
+            buttonHeight = 60
+            contentHeight -= 10
+        } else if height == 736 {
+            textHeight = 10
+            buttonHeight = 50
+            contentHeight = 30
+        } else if height == 812 {
+            contentHeight = 30
+        } else if height == 896 {
+            contentHeight = 80
+            textHeight -= 20
+            buttonHeight -= 20
+        }
+        
+        
+        let labelWidth:CGFloat = 150
+        let labelHeight:CGFloat = 50
+        let widthSub:CGFloat = 140
+        let widthAdd:CGFloat = 30
+        let labelSize:CGFloat = 15
+        let numSize:CGFloat = 35
+        
+        today()
+        
+        Firestore.firestore().collection("users").document("lastLaunch").setData([
+            "lastLaunch": day
+        ]) { err in
+            if let err = err {
+                print("Error writing document: \(err)")
+            } else {
+                print("Document successfully written!")
+            }
+        }
+        
+        titleLabel.frame = CGRect(x: width / 2 - 105, y: 130 - textHeight, width: 300, height: labelHeight)
+        titleLabel.font = .systemFont(ofSize: 25, weight: .heavy)
+        containLabel.frame = CGRect(x: 0, y: 170 + contentHeight, width: width, height: 340)
+        pcr.frame = CGRect(x: width / 2 - widthSub, y: 20, width: labelWidth, height: labelHeight)
+        pcr.font = .systemFont(ofSize: labelSize, weight: .heavy)
+        pcrNum.frame = CGRect(x: width / 2 - widthSub, y: 60, width: labelWidth, height: labelHeight)
+        pcrNum.font = .systemFont(ofSize: numSize, weight: .heavy)
+        positive.frame = CGRect(x: width / 2 + widthAdd, y: 20, width: labelWidth, height: labelHeight)
+        positive.font = .systemFont(ofSize: labelSize, weight: .heavy)
+        positiveNum.frame = CGRect(x: width / 2 + widthAdd, y: 60, width: labelWidth, height: labelHeight)
+        positiveNum.font = .systemFont(ofSize: numSize, weight: .heavy)
+        hospitalize.frame = CGRect(x: width / 2 - widthSub, y: 120, width: labelWidth, height: labelHeight)
+        hospitalize.font = .systemFont(ofSize: labelSize, weight: .heavy)
+        hospitalizeNum.frame = CGRect(x: width / 2 - widthSub, y: 160, width: labelWidth, height: labelHeight)
+        hospitalizeNum.font = .systemFont(ofSize: numSize, weight: .heavy)
+        severe.frame = CGRect(x: width / 2 + widthAdd, y: 120, width: labelWidth, height: labelHeight)
+        severe.font = .systemFont(ofSize: labelSize, weight: .heavy)
+        severeNum.frame = CGRect(x: width / 2 + widthAdd, y: 160, width: labelWidth, height: labelHeight)
+        severeNum.font = .systemFont(ofSize: numSize, weight: .heavy)
+        death.frame = CGRect(x: width / 2 - widthSub, y: 220, width: labelWidth, height: labelHeight)
+        death.font = .systemFont(ofSize: labelSize, weight: .heavy)
+        deathNum.frame = CGRect(x: width / 2 - widthSub, y: 260, width: labelWidth, height: labelHeight)
+        deathNum.font = .systemFont(ofSize: numSize, weight: .heavy)
+        discharge.frame = CGRect(x: width / 2 + widthAdd, y: 220, width: labelWidth, height: labelHeight)
+        discharge.font = .systemFont(ofSize: labelSize, weight: .heavy)
+        dischargeNum.frame = CGRect(x: width / 2 + widthAdd, y: 260, width: labelWidth, height: labelHeight)
+        dischargeNum.font = .systemFont(ofSize: numSize, weight: .heavy)
+        
+        healthButton.frame = CGRect(x: width / 2 - 100, y: height - 190 + buttonHeight, width: 200, height: 40)
+        healthButton.titleLabel?.font = .systemFont(ofSize: 20)
+        infoButton.frame = CGRect(x: width / 2 - 100, y: height - 130 + buttonHeight, width: 200, height: 40)
+        infoButton.titleLabel?.font = .systemFont(ofSize: 20)
+        
+        
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let backButton = UIButton(type: .system)
+        backButton.frame = CGRect(x: 15, y: 30, width: 30, height: 30)
+        backButton.setImage(UIImage(named: "refresh"), for: .normal)
+        backButton.tintColor = colors.white
+        backButton.setTitleColor(colors.white, for: .normal)
+        backButton.titleLabel?.font = .systemFont(ofSize: 20)
+        backButton.addTarget(self, action: #selector(reloadButtonAction), for: .touchUpInside)
+        view.addSubview(backButton)
+        
+        let chatButton = UIButton(type: .system)
+        chatButton.frame = CGRect(x: view.frame.size.width - 55, y: 25, width: 40, height: 40)
+        chatButton.tintColor = colors.white
+        chatButton.setImage(UIImage(named: "chat"), for: .normal)
+        chatButton.setTitleColor(colors.white, for: .normal)
+        chatButton.titleLabel?.font = .systemFont(ofSize: 20)
+        chatButton.addTarget(self, action: #selector(chatButtonAction), for: .touchUpInside)
+        view.addSubview(chatButton)
+        
+        let imageView = UIImageView()
+        let image = UIImage(named: "virus2")
+        imageView.image = image
+        imageView.frame = CGRect(x: view.frame.size.width + 0, y: 100, width: 50, height: 50)
+        imageView.layer.accessibilityRespondsToUserInteraction = false
+        view.addSubview(imageView)
+        UIView.animate(withDuration: 1.5, delay: 0.5, options: [.curveEaseIn], animations: {
+            imageView.frame = CGRect(x: self.view.frame.size.width - 100, y: 100, width: 50, height: 50)
+            imageView.transform = .init(rotationAngle: -900)
+        }, completion: nil)
+        
+        view.backgroundColor = .systemGray6
+        
+        let cgColor:CGColor = colors.blue.cgColor
+//        let cgColor:CGColor = .init(srgbRed: 0/255, green: 30/255, blue: 120/255, alpha: 0.7)
+        let color:UIColor = colors.blue
+        
+        var fix:CGFloat = 0
+        if view.frame.size.height == 896 {
+            fix = 50
+        }
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: 250 + fix)
+        gradientLayer.colors = [colors.bluePurple.cgColor,
+                                colors.blue.cgColor,
+                                /*colors.blue.cgColor,
+                                colors.blueGreen.cgColor*/]
+        gradientLayer.startPoint = CGPoint.init(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint.init(x: 1, y:1)
+        view.layer.insertSublayer(gradientLayer, at:0)
+        containLabel.layer.cornerRadius = 30
+        containLabel.layer.shadowOffset = CGSize(width: 0, height: 4)
+        containLabel.layer.shadowColor = UIColor.gray.cgColor
+        containLabel.layer.shadowOpacity = 0.5
+        containLabel.layer.shadowRadius = 4
+        containLabel.backgroundColor = .white
+        
+        healthButton.layer.backgroundColor = colors.white.cgColor
+        healthButton.layer.cornerRadius = 5
+        healthButton.tintColor = color
+        healthButton.setTitle("健 康 管 理", for: .normal)
+        infoButton.layer.backgroundColor = colors.white.cgColor
+        infoButton.layer.cornerRadius = 5
+        infoButton.frame.size.width = 200
+        infoButton.tintColor = color
+        infoButton.setTitle("県 別 状 況", for: .normal)
+        
+        let uiColor:UIColor = colors.bluePurple
+        titleLabel.text = "Covid in Japan"
+        titleLabel.textColor = colors.white
+        
+        pcr.text = "PCR数"
+        pcr.textColor = uiColor
+        positive.text = "感染者数"
+        positive.textColor = uiColor
+        hospitalize.text = "入院者数"
+        hospitalize.textColor = uiColor
+        severe.text = "重傷者数"
+        severe.textColor = uiColor
+        death.text = "死者数"
+        death.textColor = uiColor
+        discharge.text = "退院者数"
+        discharge.textColor = uiColor
+        
+        labelNum(pcrNum, color: color, cgColor: cgColor)
+        labelNum(positiveNum, color: color, cgColor: cgColor)
+        labelNum(hospitalizeNum, color: color, cgColor: cgColor)
+        labelNum(severeNum, color: color, cgColor: cgColor)
+        labelNum(deathNum, color: color, cgColor: cgColor)
+        labelNum(dischargeNum, color: color, cgColor: cgColor)
+        
+//        testData()
+        numAnimate()
+        realmPrefecture()
+        realmJapan()
+
+    }
+    
+    @IBAction func healthButton(_ sender: Any) {
+        KRProgressHUD.appearance().activityIndicatorColors = .init(arrayLiteral: colors.blue)
+        KRProgressHUD.show(withMessage: "Loading...", completion: {
+            self.performSegue(withIdentifier: "goHealth", sender: nil)
+        })
+    }
+    @IBAction func prefectureButton(_ sender: Any) {
+            self.performSegue(withIdentifier: "goChart", sender: nil)
+    }
+    @objc func reloadButtonAction() {
+        loadView()
+        viewDidLoad()
+    }
+    @objc func chatButtonAction() {
+        performSegue(withIdentifier: "goChat", sender: nil)
+    }
+    func numAnimate() {
+        UIView.animate(withDuration: 1.0, delay: 0.5, options: [.curveEaseIn], animations: {
+            self.pcrNum.alpha = 1.0
+            self.positiveNum.alpha = 1.0
+            self.hospitalizeNum.alpha = 1.0
+            self.severeNum.alpha = 1.0
+            self.deathNum.alpha = 1.0
+            self.dischargeNum.alpha = 1.0
+        }, completion: nil)
+    }
+    //県別情報を上書き
+    func realmPrefecture() {
+        let realm = try! Realm()
+        let pre = realm.objects(Preference.self).filter("id < 50")
+        if !pre.isEmpty {
+            try! realm.write() {
+                realm.delete(pre)
+            }
+        }
+        getCovidInfo(completion: {(result: [CovidInfo.Prefecture]) -> Void in
+            
+            for i in 0...46 {
+                let preModel = Preference()
+                preModel.id = result[i].id
+                preModel.name = result[i].name_ja
+                preModel.cases = result[i].cases
+                preModel.deaths = result[i].deaths
+                preModel.pcr = result[i].pcr
+                
+                let realm = try! Realm()
+                try! realm.write{
+                    realm.add(preModel)
+                    
+                }
+            }
+        })
+    }
+    func labelNum(_ num: UILabel, color: UIColor, cgColor: CGColor) {
+        num.layer.borderColor = cgColor
+        num.layer.cornerRadius = 5
+        num.textColor = color
+        num.alpha = 0.0
+    }
+    //日本全体情報を上書き
+    func realmJapan() {
+        let realmSum = try! Realm()
+        let preSum = realmSum.objects(Japan.self)
+
+        if !preSum.isEmpty {
+            try! realmSum.write() {
+                realmSum.delete(preSum)
+            }
+        }
+        getCovidSumInfo(completion: {(result: CovidInfo.Total) -> Void in
+            self.pcrNum.text = "\(result.pcr)"
+            self.positiveNum.text = "\(result.positive)"
+            self.hospitalizeNum.text = "\(result.hospitalize)"
+            self.severeNum.text = "\(result.severe)"
+            self.dischargeNum.text = "\(result.discharge)"
+            self.deathNum.text = "\(result.death)"
+            
+                let preModel = Japan()
+                preModel.pcr = result.pcr
+                preModel.positive = result.positive
+                preModel.hospitalize = result.hospitalize
+                preModel.severe = result.severe
+                preModel.discharge = result.discharge
+                preModel.death = result.death
+
+                let realm = try! Realm()
+                try! realm.write{
+                    realm.add(preModel)
+
+                }
+        })
+    }
+    
+    //MARK:-日本の感染者数を取得している
+    func getCovidInfo(completion: @escaping ([CovidInfo.Prefecture])->Void){
+        var data:[CovidInfo.Prefecture] = []
+        let decoder = JSONDecoder()
+        Alamofire.request("https://covid19-japan-web-api.now.sh/api//v1/prefectures")
+            .responseJSON { response in
+                do {
+                    let result:[CovidInfo.Prefecture] = try decoder.decode([CovidInfo.Prefecture].self, from: response.data!)
+                        data = result
+                } catch {
+                    print("failed")
+                    print(error.localizedDescription)
+                }
+                completion(data)
+        }
+    }
+    func getCovidSumInfo(completion: @escaping (CovidInfo.Total)->Void){
+            var data:CovidInfo.Total?
+            let decoder = JSONDecoder()
+            Alamofire.request("https://covid19-japan-web-api.now.sh/api//v1/total")
+                .responseJSON { response in
+                    do {
+                        let result:CovidInfo.Total = try decoder.decode(CovidInfo.Total.self, from: response.data!)
+                        data = result
+                    } catch {
+                        print("failed:\(error.localizedDescription)")
+                    }
+                    completion(data!)
+            }
+        }
+    func today() {
+        //今日の日付をdayに代入
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "y-M-d", options: 0, locale: Locale(identifier: "ja_JP"))
+        let today = String(dateFormatter.string(from: date)).replacingOccurrences(of: "/", with: "-")
+        let trans = today.components(separatedBy: "-")
+        day = "\(trans[0])-\(NSString(format: "%02d",Int(trans[1])!))-\(NSString(format: "%02d",Int(trans[2])!))"
+
+    }
+}
+
+
